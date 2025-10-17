@@ -1,0 +1,43 @@
+import Joi from "joi";
+
+import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
+
+const createTransactionSchema = Joi.object({
+  amount: Joi.number().required(),
+  type: Joi.string()
+    .trim()
+    .valid(...Object.values(TransactionAndCategoryTypeEnums))
+    .required(),
+  category: Joi.string().trim().required(), // expect ObjectId string
+  note: Joi.string().trim().allow("").optional(),
+});
+
+const updateTransactionSchema = Joi.object({
+  amount: Joi.number().optional(),
+  type: Joi.string()
+    .trim()
+    .valid(...Object.values(TransactionAndCategoryTypeEnums))
+    .optional(),
+  category: Joi.string().trim().optional(),
+  note: Joi.string().trim().allow("").optional(),
+});
+
+const getTransactionsSchema = Joi.object({
+  skip: Joi.number().integer().min(0).default(0),
+  limit: Joi.number().integer().min(1).max(20).default(20),
+  category: Joi.string().trim().optional(),
+  type: Joi.string()
+    .trim()
+    .valid(...Object.values(TransactionAndCategoryTypeEnums))
+    .optional(),
+  minAmount: Joi.number().optional(),
+  maxAmount: Joi.number().optional(),
+  startDate: Joi.date().iso().optional(),
+  endDate: Joi.date().iso().optional(),
+});
+
+export {
+  createTransactionSchema,
+  updateTransactionSchema,
+  getTransactionsSchema,
+};
