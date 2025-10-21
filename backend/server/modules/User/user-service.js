@@ -18,7 +18,7 @@ const authenticate = async ({ email, password }) => {
   const user = await models.User.findOne({ email });
   if (!user) throw new Error("User not found with given email");
   const ok = await bcrypt.compare(password, user.passwordHash);
-  if (!ok) throw new Error("Invalid credentials");
+  if (!ok) throw new Error("Invalid password");
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
