@@ -48,6 +48,8 @@ const getTransactionsSchema = Joi.object({
   maxAmount: Joi.number().optional(),
   startDate: Joi.date().iso().optional(),
   endDate: Joi.date().iso().optional(),
+  sortBy: Joi.string().trim().valid("createdAt", "type", "amount").optional(),
+  sortDir: Joi.string().trim().valid("asc", "desc").optional(),
 });
 
 const idSchema = Joi.object({

@@ -1,4 +1,5 @@
 import moment from "moment/moment.js";
+
 import { models } from "../../modules-loader.js";
 
 const createTransaction = async ({
@@ -30,29 +31,61 @@ const getTransactions = async ({
   maxAmount,
   startDate,
   endDate,
+  sortBy,
+  sortDir,
 }) => {
   const TransactionModel = models.Transaction;
 
+  // --- Build amount range filter ---
+  const amountFilter = {};
+  if (minAmount != null && minAmount !== "") {
+    amountFilter.$gte = Number(minAmount);
+  }
+  if (maxAmount != null && maxAmount !== "") {
+    amountFilter.$lte = Number(maxAmount);
+  }
+
+  // --- Build date range filter ---
+  const dateFilter = {};
+  if (startDate) {
+    dateFilter.$gte = moment(startDate).startOf("day").toDate();
+  }
+  if (endDate) {
+    dateFilter.$lte = moment(endDate).endOf("day").toDate();
+  }
+
+  // --- Construct query ---
   const query = {
     user: userId,
     isDeleted: false,
     ...(category && { category }),
     ...(type && { type }),
-    ...(minAmount != null && { amount: { $gte: Number(minAmount) } }),
-    ...(maxAmount != null && { amount: { $lte: Number(maxAmount) } }),
-    ...(startDate && { createdAt: { $gte: moment(startDate).toISOString() } }),
-    ...(endDate && { createdAt: { $lte: moment(endDate).toISOString() } }),
+    ...(Object.keys(amountFilter).length > 0 && { amount: amountFilter }),
+    ...(Object.keys(dateFilter).length > 0 && { createdAt: dateFilter }),
   };
 
+  // --- Sorting ---
+  let sortOptions = { createdAt: -1 }; // default (newest first)
+  if (sortBy) {
+    const order = sortDir === "asc" ? 1 : sortDir === "desc" ? -1 : -1;
+    sortOptions = { [sortBy]: order };
+  }
+
+  // --- Fetch transactions ---
   const transactions = await TransactionModel.find(query)
-    .sort({ createdAt: -1 })
+    .sort(sortOptions)
     .skip(Number(skip))
     .limit(Number(limit))
     .populate("category", "name type")
     .lean();
 
   const total = await TransactionModel.countDocuments(query);
-  return { results: transactions, count: transactions.length, total };
+
+  return {
+    results: transactions,
+    count: transactions.length,
+    total,
+  };
 };
 
 const getTransactionById = async ({ id, userId }) => {

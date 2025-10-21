@@ -35,6 +35,8 @@ const getTransactions = async (req, res) => {
       maxAmount,
       startDate,
       endDate,
+      sortBy,
+      sortDir,
     } = req.query;
     const data = await services.TransactionService.getTransactions({
       userId,
@@ -46,6 +48,8 @@ const getTransactions = async (req, res) => {
       maxAmount,
       startDate,
       endDate,
+      sortBy,
+      sortDir,
     });
     return res.json(data);
   } catch (err) {
