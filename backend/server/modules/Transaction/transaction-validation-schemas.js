@@ -2,6 +2,8 @@ import Joi from "joi";
 
 import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
 
+const objectIdPattern = /^[0-9a-fA-F]{24}$/;
+
 const createTransactionSchema = Joi.object({
   amount: Joi.number().min(1).required(),
   type: Joi.string()
@@ -36,8 +38,17 @@ const getTransactionsSchema = Joi.object({
   endDate: Joi.date().iso().optional(),
 });
 
+const idSchema = Joi.object({
+  id: Joi.string()
+    .trim()
+    .pattern(objectIdPattern)
+    .message('"id" must be a valid ObjectId')
+    .required(),
+});
+
 export {
   createTransactionSchema,
   updateTransactionSchema,
   getTransactionsSchema,
+  idSchema,
 };

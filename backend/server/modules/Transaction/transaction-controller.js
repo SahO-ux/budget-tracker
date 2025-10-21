@@ -57,10 +57,19 @@ const getTransactions = async (req, res) => {
 const getTransaction = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const txn = await services.TransactioService.getTransactionById(
-      req.params.id,
-      userId
-    );
+
+    const transactionId = req?.params?.id;
+
+    if (!transactionId)
+      return res.status(400).json({
+        message: `Missing parameter: Transaction "id" is required in URL path`,
+      });
+
+    const txn = await services.TransactioService.getTransactionById({
+      id: transactionId,
+      userId,
+    });
+
     if (!txn) return res.status(404).json({ message: "Transaction not found" });
     return res.json(txn);
   } catch (err) {
@@ -72,11 +81,20 @@ const getTransaction = async (req, res) => {
 const updateTransaction = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const updated = await services.TransactionService.updateTransaction(
-      req.params.id,
+
+    const transactionId = req?.params?.id;
+
+    if (!transactionId)
+      return res.status(400).json({
+        message: `Missing parameter: Transaction "id" is required in URL path`,
+      });
+
+    const updated = await services.TransactionService.updateTransaction({
+      id: transactionId,
       userId,
-      req.body
-    );
+      payload: req.body,
+    });
+
     if (!updated)
       return res.status(404).json({ message: "Transaction not found" });
     return res.json(updated);
@@ -89,10 +107,19 @@ const updateTransaction = async (req, res) => {
 const deleteTransaction = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const deleted = await services.TransactionsService.deleteTransaction(
-      req.params.id,
-      userId
-    );
+
+    const transactionId = req?.params?.id;
+
+    if (!transactionId)
+      return res.status(400).json({
+        message: `Missing parameter: Transaction "id" is required in URL path`,
+      });
+
+    const deleted = await services.TransactionsService.deleteTransaction({
+      id: transactionId,
+      userId,
+    });
+
     if (!deleted)
       return res.status(404).json({ message: "Transaction not found" });
     return res.json({ message: "deleted" });

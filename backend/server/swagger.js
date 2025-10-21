@@ -48,13 +48,9 @@ const swaggerDefinition = {
       Category: {
         type: "object",
         properties: {
-          _id: { type: "string" },
-          user: { type: "string" },
           name: { type: "string" },
           type: { type: "string", enum: ["income", "expense"] },
           color: { type: "string" },
-          createdAt: { type: "string" },
-          updatedAt: { type: "string" },
         },
       },
       Transaction: {

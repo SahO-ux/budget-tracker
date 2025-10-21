@@ -4,6 +4,7 @@ import authMiddleware from "../../middleware/auth.js";
 import { controllers } from "../../modules-loader.js";
 import {
   validateCreateTransaction,
+  validateIdParam,
   validateListTransactions,
   validateUpdateTransaction,
 } from "./transaction-validator.js";
@@ -27,12 +28,14 @@ router.get(
 router.get(
   "/:id",
   authMiddleware,
+  validateIdParam,
   controllers.TransactionController.getTransaction
 );
 
 router.patch(
   "/:id",
   authMiddleware,
+  validateIdParam,
   validateUpdateTransaction,
   controllers.TransactionController.updateTransaction
 );
@@ -40,6 +43,7 @@ router.patch(
 router.delete(
   "/:id",
   authMiddleware,
+  validateIdParam,
   controllers.TransactionController.deleteTransaction
 );
 

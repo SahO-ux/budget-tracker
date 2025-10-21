@@ -2,6 +2,7 @@ import { makeBodyOrQueryValidator } from "../../lib/app-utility.js";
 import {
   createTransactionSchema,
   getTransactionsSchema,
+  idSchema,
   updateTransactionSchema,
 } from "./transaction-validation-schemas.js";
 
@@ -16,8 +17,11 @@ const validateListTransactions = makeBodyOrQueryValidator(
   "query"
 );
 
+const validateIdParam = makeBodyOrQueryValidator(idSchema, "params");
+
 export {
   validateCreateTransaction,
   validateUpdateTransaction,
   validateListTransactions,
+  validateIdParam,
 };

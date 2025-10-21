@@ -55,7 +55,7 @@ const getTransactions = async ({
   return { results: transactions, count: transactions.length, total };
 };
 
-const getTransactionById = async (id, userId) => {
+const getTransactionById = async ({ id, userId }) => {
   return await models.Transaction.findOne({
     _id: id,
     user: userId,
@@ -63,7 +63,7 @@ const getTransactionById = async (id, userId) => {
   }).populate("category", "name type");
 };
 
-const updateTransaction = async (id, userId, payload) => {
+const updateTransaction = async ({ id, userId, payload }) => {
   return await models.Transaction.findOneAndUpdate(
     { _id: id, user: userId, isDeleted: false },
     payload,
@@ -71,7 +71,7 @@ const updateTransaction = async (id, userId, payload) => {
   ).populate("category", "name type");
 };
 
-const deleteTransaction = async (id, userId) => {
+const deleteTransaction = async ({ id, userId }) => {
   return await models.Transaction.findOneAndUpdate(
     { _id: id, user: userId, isDeleted: false },
     { isDeleted: true }
