@@ -2,6 +2,8 @@ import Joi from "joi";
 
 import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
 
+const objectIdPattern = /^[0-9a-fA-F]{24}$/;
+
 const createCategorySchema = Joi.object({
   name: Joi.string().trim().min(1).max(100).required(),
   type: Joi.string()
@@ -25,4 +27,17 @@ const getCategoriesSchema = Joi.object({
   limit: Joi.number().integer().min(1).max(20).default(20),
 });
 
-export { createCategorySchema, updateCategorySchema, getCategoriesSchema };
+const idSchema = Joi.object({
+  id: Joi.string()
+    .trim()
+    .pattern(objectIdPattern)
+    .message('"id" must be a valid ObjectId')
+    .required(),
+});
+
+export {
+  createCategorySchema,
+  updateCategorySchema,
+  getCategoriesSchema,
+  idSchema,
+};

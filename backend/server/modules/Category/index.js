@@ -4,6 +4,7 @@ import { controllers } from "../../modules-loader.js";
 import authMiddleware from "../../middleware/auth.js";
 import {
   validateCreateCategory,
+  validateIdParam,
   validateListCategories,
   validateUpdateCategory,
 } from "./category-validator.js";
@@ -24,11 +25,17 @@ router.get(
   controllers.CategoryController.getCategories
 );
 
-router.get("/:id", authMiddleware, controllers.CategoryController.getCategory);
+router.get(
+  "/:id",
+  authMiddleware,
+  validateIdParam,
+  controllers.CategoryController.getCategory
+);
 
 router.patch(
   "/:id",
   authMiddleware,
+  validateIdParam,
   validateUpdateCategory,
   controllers.CategoryController.updateCategory
 );
@@ -36,6 +43,7 @@ router.patch(
 router.delete(
   "/:id",
   authMiddleware,
+  validateIdParam,
   controllers.CategoryController.deleteCategory
 );
 
