@@ -39,10 +39,18 @@ const getCategories = async (req, res) => {
 const getCategory = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const category = await services.CategoryService.getCategoryById(
-      req.params.id,
-      userId
-    );
+    const categoryId = req?.params?.id;
+
+    if (!categoryId)
+      return res.status(400).json({
+        message: `Missing parameter: Category "id" is required in URL path`,
+      });
+
+    const category = await services.CategoryService.getCategoryById({
+      id: categoryId,
+      userId,
+    });
+
     if (!category)
       return res.status(404).json({ message: "Category not found" });
     return res.json(category);
@@ -55,11 +63,19 @@ const getCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const updated = await services.CategoryService.updateCategory(
-      req.params.id,
+    const categoryId = req?.params?.id;
+
+    if (!categoryId)
+      return res.status(400).json({
+        message: `Missing parameter: Category "id" is required in URL path`,
+      });
+
+    const updated = await services.CategoryService.updateCategory({
+      id: categoryId,
       userId,
-      req.body
-    );
+      payload: req.body,
+    });
+
     if (!updated)
       return res.status(404).json({ message: "Category not found" });
     return res.json(updated);
@@ -72,10 +88,19 @@ const updateCategory = async (req, res) => {
 const deleteCategory = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const deleted = await services.CategoryService.deleteCategory(
-      req.params.id,
-      userId
-    );
+
+    const categoryId = req?.params?.id;
+
+    if (!categoryId)
+      return res.status(400).json({
+        message: `Missing parameter: Category "id" is required in URL path`,
+      });
+
+    const deleted = await services.CategoryService.deleteCategory({
+      id: categoryId,
+      userId,
+    });
+
     if (!deleted)
       return res.status(404).json({ message: "Category not found" });
     return res.json({ message: "deleted" });

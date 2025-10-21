@@ -30,7 +30,7 @@ const getCategories = async ({ userId, skip = 0, limit = 50 }) => {
   return { results: categories, total };
 };
 
-const getCategoryById = async (id, userId) => {
+const getCategoryById = async ({ id, userId }) => {
   return await models.Category.findOne({
     _id: id,
     user: userId,
@@ -38,7 +38,7 @@ const getCategoryById = async (id, userId) => {
   }).lean();
 };
 
-const updateCategory = async (id, userId, payload) => {
+const updateCategory = async ({ id, userId, payload }) => {
   return await models.Category.findOneAndUpdate(
     { _id: id, user: userId, isDeleted: false },
     payload,
@@ -48,7 +48,7 @@ const updateCategory = async (id, userId, payload) => {
   ).lean();
 };
 
-const deleteCategory = async (id, userId) => {
+const deleteCategory = async ({ id, userId }) => {
   return await models.Category.findOneAndUpdate(
     { _id: id, user: userId, isDeleted: false },
     { isDeleted: true }
