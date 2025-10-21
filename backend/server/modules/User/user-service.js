@@ -1,16 +1,27 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { models } from "../../modules-loader.js";
+import { models, services } from "../../modules-loader.js";
 import { SALT_ROUNDS } from "./constants.js";
 
 const createUser = async ({ name = "", email, password }) => {
   const UserModel = models.User;
+  const _email = email?.trim()?.toLowerCase();
+  const _password = password?.trim();
 
-  const existing = await UserModel.findOne({ email }).lean();
+  const existing = await UserModel.findOne({ email: _email }).lean();
   if (existing) throw new Error("User already exists");
-  const hash = await bcrypt.hash(password, SALT_ROUNDS);
-  const user = await UserModel.create({ name, email, passwordHash: hash });
+
+  const hash = await bcrypt.hash(_password, SALT_ROUNDS);
+  const user = await UserModel.create({
+    name,
+    email: _email,
+    passwordHash: hash,
+  });
+
+  // Create default "Uncategorized" category for both "expense" & "income"
+  await services.CategoryService.createDefaultCategoryForUser(user._id);
+
   return { _id: user._id, name: user.name, email: user.email };
 };
 

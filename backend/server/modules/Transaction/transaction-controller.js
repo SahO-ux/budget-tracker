@@ -16,7 +16,7 @@ const createTransaction = async (req, res) => {
       category,
       note,
     });
-    return res.status(201).json({ _id: txn._id });
+    return res.status(201).json(txn);
   } catch (err) {
     console.error("createTransaction error:", err.message);
     return res.status(500).json({ message: err.message });

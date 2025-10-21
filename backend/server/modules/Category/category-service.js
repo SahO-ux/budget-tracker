@@ -1,4 +1,5 @@
 import { models } from "../../modules-loader.js";
+import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
 
 const createCategory = async ({ userId, name, type, color = "" }) => {
   const trimmedName = name?.trim();
@@ -55,6 +56,34 @@ const deleteCategory = async ({ id, userId }) => {
   );
 };
 
+const createDefaultCategoryForUser = async (userId) => {
+  if (!userId)
+    return console.error(
+      `userId is required to create default uncategorized category`
+    );
+
+  try {
+    // Create default "Uncategorized" categories
+    await models.Category.insertMany([
+      {
+        user: userId,
+        name: "Uncategorized",
+        type: TransactionAndCategoryTypeEnums.EXPENSE,
+        color: "#9CA3AF",
+      },
+      {
+        user: userId,
+        name: "Uncategorized",
+        type: TransactionAndCategoryTypeEnums.INCOME,
+        color: "#9CA3AF",
+      },
+    ]);
+  } catch (err) {
+    // Do not block user creation on category errors; log and continue.
+    console.error("Failed to create default category for user:", user._id, err);
+  }
+};
+
 export default {
   serviceName: "CategoryService",
   createCategory,
@@ -62,4 +91,5 @@ export default {
   getCategoryById,
   updateCategory,
   deleteCategory,
+  createDefaultCategoryForUser,
 };

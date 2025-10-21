@@ -13,7 +13,7 @@ const createCategory = async (req, res) => {
       type,
       color,
     });
-    return res.status(201).json({ _id: cat._id });
+    return res.status(201).json(cat);
   } catch (err) {
     console.error("createCategory error:", err.message);
     return res.status(400).json({ message: err.message });

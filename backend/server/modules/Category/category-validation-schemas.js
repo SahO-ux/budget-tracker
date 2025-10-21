@@ -24,7 +24,7 @@ const updateCategorySchema = Joi.object({
 
 const getCategoriesSchema = Joi.object({
   skip: Joi.number().integer().min(0).default(0),
-  limit: Joi.number().integer().min(1).max(20).default(20),
+  limit: Joi.number().integer().min(1).max(200).default(20),
 });
 
 const idSchema = Joi.object({

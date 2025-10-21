@@ -19,7 +19,7 @@ const makeBodyOrQueryValidator = (schema, source = "body") => {
         message: error.details.map((d) => d.message).join(", "),
       });
     }
-    req[source] = value;
+    if (source !== "query") req[source] = value;
     return next();
   };
 };
