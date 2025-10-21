@@ -10,7 +10,11 @@ const createTransactionSchema = Joi.object({
     .trim()
     .valid(...Object.values(TransactionAndCategoryTypeEnums))
     .required(),
-  category: Joi.string().trim().required(), // expect ObjectId string
+  category: Joi.string()
+    .trim()
+    .pattern(objectIdPattern)
+    .message('"category" must be a valid ObjectId')
+    .required(),
   note: Joi.string().trim().allow("").optional(),
 });
 
@@ -20,14 +24,22 @@ const updateTransactionSchema = Joi.object({
     .trim()
     .valid(...Object.values(TransactionAndCategoryTypeEnums))
     .optional(),
-  category: Joi.string().trim().optional(),
+  category: Joi.string()
+    .trim()
+    .pattern(objectIdPattern)
+    .message('"category" must be a valid ObjectId')
+    .optional(),
   note: Joi.string().trim().allow("").optional(),
 });
 
 const getTransactionsSchema = Joi.object({
   skip: Joi.number().integer().min(0).default(0),
   limit: Joi.number().integer().min(1).max(20).default(20),
-  category: Joi.string().trim().optional(),
+  category: Joi.string()
+    .trim()
+    .pattern(objectIdPattern)
+    .message('"category" must be a valid ObjectId')
+    .optional(),
   type: Joi.string()
     .trim()
     .valid(...Object.values(TransactionAndCategoryTypeEnums))
