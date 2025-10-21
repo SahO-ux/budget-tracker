@@ -5,7 +5,7 @@ import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
 const TransactionSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    amount: { type: Number, required: true },
+    amount: { type: Number, required: true, default: 0 },
     type: {
       type: String,
       enum: Object.values(TransactionAndCategoryTypeEnums),

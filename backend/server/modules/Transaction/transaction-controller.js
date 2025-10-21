@@ -5,7 +5,9 @@ const createTransaction = async (req, res) => {
     const userId = req.userId || req.user?._id;
     const { amount, type, category, note } = req.body;
     if (!amount || !type || !category)
-      return res.status(400).json({ message: "Missing param fields" });
+      return res
+        .status(400)
+        .json({ message: "Missing amount, type or category from params" });
 
     const txn = await services.TransactionService.createTransaction({
       userId,
