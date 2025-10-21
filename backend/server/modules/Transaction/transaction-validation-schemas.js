@@ -3,7 +3,7 @@ import Joi from "joi";
 import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
 
 const createTransactionSchema = Joi.object({
-  amount: Joi.number().required(),
+  amount: Joi.number().min(1).required(),
   type: Joi.string()
     .trim()
     .valid(...Object.values(TransactionAndCategoryTypeEnums))
