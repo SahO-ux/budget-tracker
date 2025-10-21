@@ -3,8 +3,11 @@ import { services } from "../../modules-loader.js";
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    if (!email || !password)
-      return res.status(400).json({ message: "Missing email or password" });
+    if (!email || !password || !name)
+      return res
+        .status(400)
+        .json({ message: "Missing name,email or password" });
+
     const user = await services.UserService.createUser({
       name,
       email,
