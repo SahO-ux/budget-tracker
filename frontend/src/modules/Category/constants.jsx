@@ -20,7 +20,7 @@ export const categoryColumns = ({ onDeleteClick, handleRowClick }) => [
     name: "Type",
     cellClass: "text-left cursor-pointer",
     headerCellClass: "text-left",
-    sortable: true,
+    // sortable: true,
     renderCell: ({ row }) => (
       <div
         className={`font-semibold ${
@@ -37,7 +37,7 @@ export const categoryColumns = ({ onDeleteClick, handleRowClick }) => [
   {
     key: "createdAt",
     name: "Date",
-    sortable: true,
+    // sortable: true,
     cellClass: "text-center text-gray-800 cursor-pointer",
     headerCellClass: "text-center",
     renderCell: ({ row }) => (
