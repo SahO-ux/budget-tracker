@@ -69,7 +69,7 @@ const getTransaction = async (req, res) => {
         message: `Missing parameter: Transaction "id" is required in URL path`,
       });
 
-    const txn = await services.TransactioService.getTransactionById({
+    const txn = await services.TransactionService.getTransactionById({
       id: transactionId,
       userId,
     });
@@ -119,7 +119,7 @@ const deleteTransaction = async (req, res) => {
         message: `Missing parameter: Transaction "id" is required in URL path`,
       });
 
-    const deleted = await services.TransactionsService.deleteTransaction({
+    const deleted = await services.TransactionService.deleteTransaction({
       id: transactionId,
       userId,
     });
