@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import _ from "lodash";
@@ -58,6 +58,15 @@ export default function TransactionFilters({ filters, setFilters }) {
     []
   );
 
+  // cleanup debounces on unmount
+
+  useEffect(() => {
+    return () => {
+      debouncedSetMaxAmount.cancel();
+      debouncedSetMinAmount.cancel();
+    };
+  }, [debouncedSetMaxAmount, debouncedSetMinAmount]);
+
   const handleMinChange = useCallback(
     (e) => {
       const raw = e?.target?.value?.replace(/[^0-9]/g, "");
@@ -110,14 +119,12 @@ export default function TransactionFilters({ filters, setFilters }) {
           <select
             className="w-full p-2 border rounded text-sm"
             value={filters.type}
-            onChange={
-              (e) =>
-                setFilters((s) => ({
-                  ...s,
-                  type: e.target.value,
-                  category: "",
-                }))
-              // setLocal((s) => ({ ...s, type: e.target.value }))
+            onChange={(e) =>
+              setFilters((s) => ({
+                ...s,
+                type: e.target.value,
+                category: "",
+              }))
             }
           >
             <option value="">All</option>
