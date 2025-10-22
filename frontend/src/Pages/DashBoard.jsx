@@ -188,6 +188,7 @@ export default function Dashboard() {
       );
   }
 
+  const totalIncome = data ? Number(data.income || 0) : 0;
   const spentPercent =
     data && data.budget
       ? Math.min(100, Math.round((data.spent / data.budget) * 100))
@@ -197,6 +198,7 @@ export default function Dashboard() {
   const remaining = data
     ? Math.max(0, (data.budget || 0) - (data.spent || 0))
     : 0;
+  const balance = totalIncome - (data ? Number(data.spent || 0) : 0);
 
   /* framer-motion variants */
   const enterUp = {
@@ -276,10 +278,26 @@ export default function Dashboard() {
                       {formatNumber(data.budget ?? 0, { withCurrency: true })}
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-500">Spent</div>
+
+                  {/* Right side: show Income, Spent and Balance */}
+                  <div className="text-right flex flex-col items-end gap-2">
+                    <div className="text-sm text-gray-500">Income</div>
+                    <div className="text-lg font-semibold text-green-600">
+                      {formatNumber(totalIncome, { withCurrency: true })}
+                    </div>
+
+                    <div className="text-sm text-gray-500 mt-2">Spent</div>
                     <div className="text-2xl font-bold text-red-600">
                       {formatNumber(data.spent ?? 0, { withCurrency: true })}
+                    </div>
+
+                    <div className="text-sm text-gray-500 mt-2">Balance</div>
+                    <div
+                      className={`text-lg font-semibold ${
+                        balance < 0 ? "text-red-600" : "text-green-600"
+                      }`}
+                    >
+                      {formatNumber(balance, { withCurrency: true })}
                     </div>
                   </div>
                 </div>

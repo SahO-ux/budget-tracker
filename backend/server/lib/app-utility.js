@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 const makeBodyOrQueryValidator = (schema, source = "body") => {
   if (!schema)
     throw new TypeError(
@@ -26,4 +28,27 @@ const makeBodyOrQueryValidator = (schema, source = "body") => {
 
 const escapeRegExp = (s = "") => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // escape regex meta-chars
 
-export { makeBodyOrQueryValidator, escapeRegExp };
+/**
+ * Safely normalize userId input and return an ObjectId
+ */
+const normalizeToObjectId = (maybeId) => {
+  // unwrap MongoDB extended JSON formats like { $oid: "..." } or { _id: "..." }
+  if (maybeId && typeof maybeId === "object") {
+    if (maybeId.$oid) maybeId = maybeId.$oid;
+    else if (maybeId._id) maybeId = maybeId._id;
+  }
+
+  if (maybeId == null) {
+    throw new Error("No userId provided");
+  }
+
+  const str = String(maybeId).trim();
+
+  if (!mongoose.Types.ObjectId.isValid(str)) {
+    throw new Error("Invalid userId supplied to analytics: " + str);
+  }
+
+  return new mongoose.mongo.ObjectId(str);
+};
+
+export { makeBodyOrQueryValidator, escapeRegExp, normalizeToObjectId };

@@ -1,28 +1,5 @@
-import mongoose from "mongoose";
 import { models } from "../../modules-loader.js";
-
-/**
- * Safely normalize userId input and return an ObjectId
- */
-const normalizeToObjectId = (maybeId) => {
-  // unwrap MongoDB extended JSON formats like { $oid: "..." } or { _id: "..." }
-  if (maybeId && typeof maybeId === "object") {
-    if (maybeId.$oid) maybeId = maybeId.$oid;
-    else if (maybeId._id) maybeId = maybeId._id;
-  }
-
-  if (maybeId == null) {
-    throw new Error("No userId provided");
-  }
-
-  const str = String(maybeId).trim();
-
-  if (!mongoose.Types.ObjectId.isValid(str)) {
-    throw new Error("Invalid userId supplied to analytics: " + str);
-  }
-
-  return new mongoose.mongo.ObjectId(str);
-};
+import { normalizeToObjectId } from "../../lib/app-utility.js";
 
 const getAnalytics = async (userIdInput) => {
   const TransactionModel = models.Transaction;
