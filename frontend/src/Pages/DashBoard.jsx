@@ -84,15 +84,31 @@ export default function Dashboard() {
     setMonth(e.target.value);
   }
 
+  /**
+   * drawDonut()
+   * - responsive sizing based on chart container width
+   * - chart is vertically centered with extra space below for the "Spent" label
+   * - ensures spent label never overlaps donut arcs
+   */
   function drawDonut() {
     const node = chartRef.current;
     if (!node || !data) return;
+
+    // clear previous
     d3.select(node).selectAll("*").remove();
 
-    const width = 260;
-    const height = 260;
-    const radius = Math.min(width, height) / 2;
+    // measure container — prefer available width; fallback to 260
+    // add some padding for card gutters
+    const containerWidth =
+      node.clientWidth || node.parentElement?.clientWidth || 260;
+    // clamp to sensible sizes
+    const width = Math.min(Math.max(240, Math.floor(containerWidth - 40)), 360);
+    // make height a bit taller than width to allow space below donut for label
+    const height = Math.max(width, Math.floor(width * 1.05 + 40));
 
+    const radius = Math.min(width, height) / 2 - 6; // small inset
+
+    // data
     const spent = Number(data.spent || 0);
     const budget = Number(data.budget || 0);
     const remaining = Math.max(0, budget - spent);
@@ -111,7 +127,7 @@ export default function Dashboard() {
     const colors = d3
       .scaleOrdinal()
       .domain(pieData.map((d) => d.key))
-      .range(["#ef4444", "#2563eb"]); // red / blue (danger / primary)
+      .range(["#ef4444", "#2563eb"]);
 
     const svg = d3
       .select(node)
@@ -120,9 +136,14 @@ export default function Dashboard() {
       .style("width", "100%")
       .style("height", "100%");
 
+    // center group: shift upwards a bit so we have room for the "spent" label below
+    const centerYOffset = -Math.max(6, radius * 0.08);
     const g = svg
       .append("g")
-      .attr("transform", `translate(${width / 2}, ${height / 2})`);
+      .attr(
+        "transform",
+        `translate(${width / 2}, ${height / 2 + centerYOffset})`
+      );
 
     const arc = d3
       .arc()
@@ -153,12 +174,13 @@ export default function Dashboard() {
         return (t) => arc(i(t));
       });
 
-    // center label
+    // center label (budget amount)
     const center = g.append("g").attr("class", "center");
+
     center
       .append("text")
       .attr("text-anchor", "middle")
-      .style("font-size", "18px")
+      .style("font-size", Math.max(14, radius * 0.18) + "px")
       .style("font-weight", 600)
       .text(budget ? `${formatNumber(budget, { withCurrency: true })}` : "₹0");
 
@@ -167,21 +189,27 @@ export default function Dashboard() {
       .attr("text-anchor", "middle")
       .attr("dy", "1.4em")
       .style("fill", "#666")
-      .style("font-size", "12px")
+      .style("font-size", Math.max(10, radius * 0.09) + "px")
       .text("Budget");
 
+    // spent label below the donut: position adaptively below the drawn donut
     const percent =
       budget > 0
         ? Math.min(100, Math.round((spent / budget) * 100))
         : spent > 0
         ? 100
         : 0;
+
+    // compute Y for spent label: to put it below the bottom of the donut arcs
+    const spentLabelY = height / 2 + radius * 0.25;
+
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", height - 6)
+      .attr("y", spentLabelY)
       .attr("text-anchor", "middle")
-      .style("font-size", "12px")
+      .style("dominant-baseline", "hanging")
+      .style("font-size", Math.max(11, radius * 0.085) + "px")
       .style("fill", "#666")
       .text(
         `Spent: ${formatNumber(spent, { withCurrency: true })} (${percent}%)`
@@ -330,7 +358,7 @@ export default function Dashboard() {
             transition={{ duration: 0.45 }}
           >
             <div
-              style={{ width: 260, height: 260 }}
+              style={{ width: "100%", maxWidth: 320, height: 320 }}
               ref={chartRef}
               aria-hidden
             />
