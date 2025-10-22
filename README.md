@@ -16,6 +16,7 @@ The project enables users to record income/expenses, categorize transactions, an
 - React.js (Vite) – UI framework
 - D3.js – Data-driven visualizations for category & monthly analytics
 - TailwindCSS – Styling and layout
+- Redux toolkit to store all categories globally
 - DataGrid – Displaying api data
 - Axios – API communication
 - React Router DOM – Routing
@@ -165,6 +166,7 @@ budget-tracker/
 
 - D3.js for data visualization
 - DataGrid for displaying data in table
+- Redux toolkit to store categories globally
 - Axios for REST communication
 - TailwindCSS for styling
 - Framer motion for intuitive card interactions
