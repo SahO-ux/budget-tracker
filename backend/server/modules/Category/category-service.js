@@ -1,5 +1,6 @@
 import { models } from "../../modules-loader.js";
 import { TransactionAndCategoryTypeEnums } from "../../lib/global-constants.js";
+import { escapeRegExp } from "../../lib/app-utility.js";
 
 const createCategory = async ({ userId, name, type, color = "" }) => {
   const trimmedName = name?.trim();
@@ -17,12 +18,26 @@ const createCategory = async ({ userId, name, type, color = "" }) => {
   return await models.Category.create(payload);
 };
 
-const getCategories = async ({ userId, skip = 0, limit = 50 }) => {
+const getCategories = async ({ userId, skip = 0, limit = 50, name, type }) => {
   const CategoryModel = models.Category;
+  const trimmedName = name?.trim();
+  const trimmedType = type?.trim();
 
-  const query = { user: userId, isDeleted: false };
+  const query = {
+    user: userId,
+    isDeleted: false,
+  };
+
+  if (trimmedName) {
+    query.name = { $regex: new RegExp(escapeRegExp(trimmedName), "i") };
+  }
+
+  if (trimmedType) {
+    query.type = { $regex: new RegExp(`^${escapeRegExp(trimmedType)}$`, "i") };
+  }
+
   const categories = await CategoryModel.find(query)
-    .sort({ name: 1 })
+    .sort({ createdAt: -1 })
     .skip(Number(skip))
     .limit(Number(limit))
     .lean();

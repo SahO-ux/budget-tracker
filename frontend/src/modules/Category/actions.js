@@ -1,7 +1,14 @@
 import API from "../../api";
 
-const getCategories = async ({ skip = 0, limit = 20 } = {}) => {
-  const res = await API.get("/category", { params: { skip, limit } });
+const getCategories = async ({
+  skip = 0,
+  limit = 20,
+  name = "",
+  type = "",
+} = {}) => {
+  const res = await API.get("/category", {
+    params: { skip, limit, ...(name && { name }), ...(type && { type }) },
+  });
   return res.data;
 };
 

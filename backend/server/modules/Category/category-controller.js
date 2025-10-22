@@ -23,11 +23,13 @@ const createCategory = async (req, res) => {
 const getCategories = async (req, res) => {
   try {
     const userId = req.userId || req.user?._id;
-    const { skip = 0, limit = 20 } = req.query;
+    const { skip = 0, limit = 20, name, type } = req.query;
     const categories = await services.CategoryService.getCategories({
       userId,
       skip,
       limit,
+      name,
+      type,
     });
     return res.json(categories);
   } catch (err) {

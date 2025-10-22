@@ -24,4 +24,6 @@ const makeBodyOrQueryValidator = (schema, source = "body") => {
   };
 };
 
-export { makeBodyOrQueryValidator };
+const escapeRegExp = (s = "") => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // escape regex meta-chars
+
+export { makeBodyOrQueryValidator, escapeRegExp };

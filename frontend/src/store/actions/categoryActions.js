@@ -12,19 +12,19 @@ export const UPDATE_CATEGORY = "UPDATE_CATEGORY";
 export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
 
 /* Plain action creators (for reducer) */
-const fetchCategoriesAction = (categories) => ({
+export const fetchCategoriesAction = (categories) => ({
   type: FETCH_CATEGORIES,
   payload: { categories },
 });
-const addCategoryAction = (category) => ({
+export const addCategoryAction = (category) => ({
   type: ADD_CATEGORY,
   payload: { category },
 });
-const updateCategoryAction = (category) => ({
+export const updateCategoryAction = (category) => ({
   type: UPDATE_CATEGORY,
   payload: { category },
 });
-const removeCategoryAction = (categoryId) => ({
+export const removeCategoryAction = (categoryId) => ({
   type: REMOVE_CATEGORY,
   payload: { categoryId },
 });
@@ -32,7 +32,7 @@ const removeCategoryAction = (categoryId) => ({
 /* Thunks (async) */
 
 /* fetchCategories({ skip, limit }): fetch and dispatch */
-export const fetchCategories = ({ skip = 0, limit = 50 } = {}) => {
+export const fetchCategories = ({ skip = 0, limit = 200 } = {}) => {
   return async (dispatch) => {
     try {
       const res = await apiGetCategories({ skip, limit });

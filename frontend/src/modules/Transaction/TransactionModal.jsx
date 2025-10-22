@@ -136,7 +136,9 @@ export default function TransactionModal({
         resultTransaction = await createTransaction(payload);
         onAddedOrEdited && onAddedOrEdited();
       }
-
+      toast.success(
+        `Transaction ${transaction._id ? "edited" : "added"} successfully`
+      );
       onHide && onHide();
     } catch (err) {
       console.error("Transaction save error:", err);
