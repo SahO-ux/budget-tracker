@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Base Layer ===== */
+@layer base {
+  /* Global font and color setup */
+  html,
+  body {
+    @apply h-full bg-gray-50 text-gray-800 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-gray-900 font-semibold;
+  }
+
+  a {
+    @apply text-blue-600 hover:text-blue-700 transition-colors;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
+/* ===== Components Layer ===== */
+@layer components {
+  /* Generic card style */
+  .card {
+    @apply bg-white shadow-md rounded-xl p-6 transition-transform hover:scale-[1.01];
+  }
+
+  /* Button variants */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium
+      transition-all focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-300;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-300;
+  }
+
+  /* Input fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    @apply w-full rounded-lg border border-gray-300 px-3 py-2 text-sm
+      focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition;
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+  }
+
+  /* Form labels */
+  label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  /* Error and success messages */
+  .form-error {
+    @apply text-sm text-red-600 mt-1;
+  }
+  .form-success {
+    @apply text-sm text-green-600 mt-1;
+  }
+
+  /* Page containers */
+  .page-container {
+    @apply min-h-screen bg-gradient-to-tr from-gray-50 to-white flex items-center justify-center px-4;
+  }
+
+  /* Utility for consistent shadows */
+  .soft-shadow {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* ===== Utilities Layer ===== */
+@layer utilities {
+  /* Fade animation */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ===== react-data-grid overrides (paste near bottom of index.css) ===== */
+@layer components {
+  /* Horizontal separators between header and rows */
+  .rdg .rdg-header-row,
+  .rdg-light .rdg-header-row {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06) !important;
+  }
+
+  /* Horizontal separators between rows */
+  .rdg .rdg-row,
+  .rdg-light .rdg-row {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06) !important;
+    background-clip: padding-box;
+  }
+
+  /* Vertical cell separators */
+  .rdg .rdg-cell,
+  .rdg-light .rdg-cell,
+  .rdg .rdg-header-row .rdg-cell,
+  .rdg-light .rdg-header-row .rdg-cell {
+    border-right: 1px solid rgba(15, 23, 42, 0.04) !important;
+  }
+
+  /* remove right border on last cell so table edge remains clean */
+  .rdg .rdg-row .rdg-cell:last-child,
+  .rdg-light .rdg-row .rdg-cell:last-child,
+  .rdg .rdg-header-row .rdg-cell:last-child,
+  .rdg-light .rdg-header-row .rdg-cell:last-child {
+    border-right: none !important;
+  }
+
+  /* stronger hover contrast to see row boundaries when hovering */
+  .rdg .rdg-row:hover,
+  .rdg-light .rdg-row:hover {
+    background-color: rgba(0, 0, 0, 0.015) !important;
+  }
+
+  /* make header text slightly bolder/contrasty */
+  .rdg .rdg-header-row .rdg-cell,
+  .rdg-light .rdg-header-row .rdg-cell {
+    font-weight: 600;
+  }
+}
