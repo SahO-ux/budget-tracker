@@ -17,14 +17,6 @@ const normalizeToObjectId = (maybeId) => {
 
   const str = String(maybeId).trim();
 
-  // quick debug log — remove or lower log level in production
-  console.log(
-    "analytics-service: normalizeToObjectId received:",
-    str,
-    "typeof:",
-    typeof maybeId
-  );
-
   if (!mongoose.Types.ObjectId.isValid(str)) {
     throw new Error("Invalid userId supplied to analytics: " + str);
   }
