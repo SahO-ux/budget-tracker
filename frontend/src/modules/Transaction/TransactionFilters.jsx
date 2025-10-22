@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import Select from "react-select";
-import moment from "moment";
 import _ from "lodash";
 
 import {
@@ -17,10 +16,6 @@ import { initialFilterState } from "./constants";
  * - props:
  *    filters: current parent filters
  *    setFilters: setter (updates parent's filters state)
- *
- * Behavior:
- * - Clear (small button) resets all filters immediately
- * - compact single-row layout, wraps on small screens
  */
 export default function TransactionFilters({ filters, setFilters }) {
   const expenseCategories = useSelector(
@@ -30,8 +25,56 @@ export default function TransactionFilters({ filters, setFilters }) {
     (state) => state.categoriesReducer.incomeCategories || []
   );
 
-  // local state for inputs (kept as simple strings while editing)
-  //  const local ={}
+  const [minInput, setMinInput] = useState(
+    filters.minAmount != null && filters.minAmount !== ""
+      ? filters.minAmount
+      : ""
+  );
+  const [maxInput, setMaxInput] = useState(
+    filters.maxAmount != null && filters.maxAmount !== ""
+      ? filters.maxAmount
+      : ""
+  );
+
+  const debouncedSetMaxAmount = useMemo(
+    () =>
+      _.debounce((value) => {
+        setFilters((prev) => ({
+          ...prev,
+          maxAmount: value === "" ? "" : Number(value),
+        }));
+      }, 500),
+    []
+  );
+
+  const debouncedSetMinAmount = useMemo(
+    () =>
+      _.debounce((value) => {
+        setFilters((prev) => ({
+          ...prev,
+          minAmount: value === "" ? "" : Number(value),
+        }));
+      }, 500),
+    []
+  );
+
+  const handleMinChange = useCallback(
+    (e) => {
+      const raw = e?.target?.value?.replace(/[^0-9]/g, "");
+      setMinInput(raw);
+      debouncedSetMinAmount(raw);
+    },
+    [debouncedSetMinAmount]
+  );
+
+  const handleMaxChange = useCallback(
+    (e) => {
+      const raw = e?.target?.value?.replace(/[^0-9]/g, "");
+      setMaxInput(raw);
+      debouncedSetMaxAmount(raw);
+    },
+    [debouncedSetMaxAmount]
+  );
 
   // compute category list based on selected type (or both if "All")
   const categoryOptions = useMemo(() => {
@@ -54,6 +97,8 @@ export default function TransactionFilters({ filters, setFilters }) {
 
   const clearAll = () => {
     setFilters(initialFilterState);
+    setMinInput("");
+    setMaxInput("");
   };
 
   return (
@@ -112,18 +157,9 @@ export default function TransactionFilters({ filters, setFilters }) {
             className="w-full p-2 border rounded text-sm"
             placeholder="e.g. 1000"
             value={
-              filters.minAmount
-                ? formatNumber(filters.minAmount, {
-                    withCurrency: true,
-                  })
-                : ""
+              minInput ? formatNumber(minInput, { withCurrency: true }) : ""
             }
-            onChange={(e) =>
-              setFilters((s) => ({
-                ...s,
-                minAmount: e.target.value.replace(/[^0-9]/g, ""),
-              }))
-            }
+            onChange={handleMinChange}
             inputMode="numeric"
           />
         </div>
@@ -135,18 +171,9 @@ export default function TransactionFilters({ filters, setFilters }) {
             className="w-full p-2 border rounded text-sm"
             placeholder="e.g. 5000"
             value={
-              filters.maxAmount
-                ? formatNumber(filters.maxAmount, {
-                    withCurrency: true,
-                  })
-                : ""
+              maxInput ? formatNumber(maxInput, { withCurrency: true }) : ""
             }
-            onChange={(e) =>
-              setFilters((s) => ({
-                ...s,
-                maxAmount: e.target.value.replace(/[^0-9]/g, ""),
-              }))
-            }
+            onChange={handleMaxChange}
             inputMode="numeric"
           />
         </div>
@@ -177,7 +204,6 @@ export default function TransactionFilters({ filters, setFilters }) {
           />
         </div>
 
-        {/* Spacer + Clear button */}
         <div className="flex-1 min-w-[80px] flex justify-end">
           <button
             onClick={clearAll}

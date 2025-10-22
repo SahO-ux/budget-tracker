@@ -13,6 +13,7 @@ import {
 } from "./constants";
 
 import "react-data-grid/lib/styles.css";
+import LoaderBar from "../../components/LoaderBar";
 
 /**
  * TransactionsPage
@@ -210,6 +211,10 @@ export default function TransactionsPage() {
     );
   };
 
+  const rowKeyGetter = (row) => {
+    return `${row._id}`;
+  };
+
   return (
     <>
       <div className="p-6">
@@ -232,6 +237,7 @@ export default function TransactionsPage() {
         </div>
 
         <div className="bg-white rounded shadow relative">
+          {isLoading && <LoaderBar />}
           <DataGrid
             columns={columns}
             rows={rows}
@@ -239,7 +245,7 @@ export default function TransactionsPage() {
             style={{ height: "calc(100vh - 200px)" }}
             rowHeight={42}
             headerRowHeight={44}
-            rowKeyGetter={(r) => r._id}
+            rowKeyGetter={rowKeyGetter}
             onScroll={(e) => handleScroll(e)}
             sortColumns={sortColumn}
             onSortColumnsChange={(newSortColumns) => {
@@ -249,15 +255,6 @@ export default function TransactionsPage() {
               noRowsFallback: <EmptyRowsRenderer />,
             }}
           />
-
-          {/* loader overlay shown while fetching */}
-          {isLoading && (
-            <div className="absolute bottom-0 left-0 right-0">
-              <div className="w-full py-2 text-center text-sm text-gray-600 border-t bg-white/80">
-                Loading...
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
