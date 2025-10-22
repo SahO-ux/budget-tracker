@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { DataGrid } from "react-data-grid";
 import toast from "react-hot-toast";
 
@@ -25,6 +31,7 @@ import LoaderBar from "../../components/LoaderBar";
 
 export default function TransactionsPage() {
   const LIMIT = 20;
+  const firstRenderRef = useRef(true);
 
   // rows & pagination
   const [rows, setRows] = useState([]);
@@ -139,12 +146,16 @@ export default function TransactionsPage() {
   useEffect(() => {
     setRows([]);
     setSkip(0);
-    // setHasMore(true);
     _getTransactions({ reset: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, sortColumn]);
 
   useEffect(() => {
+    if (firstRenderRef.current) {
+      // first render — skip this effect once
+      firstRenderRef.current = false;
+      return;
+    }
     _getTransactions();
   }, [skip]);
 
