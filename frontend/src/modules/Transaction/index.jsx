@@ -20,6 +20,7 @@ import {
 
 import "react-data-grid/lib/styles.css";
 import LoaderBar from "../../components/LoaderBar";
+import EmptyRowsRenderer from "../../components/EmptyRowsRenderer";
 
 /**
  * TransactionsPage
@@ -206,26 +207,6 @@ export default function TransactionsPage() {
     });
   };
 
-  const EmptyRowsRenderer = () => {
-    return (
-      <div style={{ textAlign: "start", gridColumn: "1/-1" }}>
-        <div
-          style={{
-            padding: "20px 10px",
-            backgroundColor: "white",
-            fontSize: "12px",
-          }}
-        >
-          No Transaction Found
-        </div>
-      </div>
-    );
-  };
-
-  const rowKeyGetter = (row) => {
-    return `${row._id}`;
-  };
-
   return (
     <>
       <div className="p-6">
@@ -256,13 +237,13 @@ export default function TransactionsPage() {
             style={{ height: "calc(100vh - 200px)" }}
             rowHeight={42}
             headerRowHeight={44}
-            rowKeyGetter={rowKeyGetter}
+            rowKeyGetter={(row) => row._id}
             onScroll={(e) => handleScroll(e)}
             sortColumns={sortColumn}
             onSortColumnsChange={(newSortColumns) => {
               setSortColumn(newSortColumns || []);
             }}
-            components={{
+            renderers={{
               noRowsFallback: <EmptyRowsRenderer />,
             }}
           />

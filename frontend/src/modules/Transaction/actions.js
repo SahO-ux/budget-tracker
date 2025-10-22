@@ -1,7 +1,6 @@
 import moment from "moment";
 
 import API from "../../api";
-import { sortBy } from "lodash";
 
 const getTransactions = async ({
   skip = 0,
