@@ -26,6 +26,7 @@ The project enables users to record income/expenses, categorize transactions, an
 - Node.js + Express.js – RESTful API framework
 - MongoDB + Mongoose – Database & ORM
 - Joi – Schema validation
+- swagger-ui-express - For creating browsable API page
 
 ---
 
@@ -167,11 +168,12 @@ budget-tracker/
 - D3.js for data visualization
 - DataGrid for displaying data in table
 - Redux toolkit to store categories globally
+- swagger-ui-express - For creating browsable API page
 - Axios for REST communication
 - TailwindCSS for styling
 - Framer motion for intuitive card interactions
 - Moment.js for displaying dates across app
-- React Bootstrap for implemnting modals across app
+- React Bootstrap for implemnting modals across frontend
 - React.js for UI development
 - Express.js for backend API
 - MongoDB for database
