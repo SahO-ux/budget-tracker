@@ -7,6 +7,7 @@ import Dashboard from "./Pages/DashBoard";
 import TransactionsPage from "./modules/Transaction";
 import Header from "./components/Header";
 import CategoriesPage from "./modules/Category";
+import AnalyticsPage from "./Pages/AnalyticsPage";
 
 const Protected = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -26,6 +27,14 @@ export default function App() {
             element={
               <Protected>
                 <Dashboard />
+              </Protected>
+            }
+          />
+          <Route
+            path="/analytics"
+            element={
+              <Protected>
+                <AnalyticsPage />
               </Protected>
             }
           />

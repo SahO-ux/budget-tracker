@@ -322,6 +322,13 @@ export default function Dashboard() {
         {/* quick action cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <QuickActionCard
+            title="Analytics"
+            subtitle="Visualize income & expenses"
+            onClick={() => navigate("/analytics")}
+            icon="A"
+            className="bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200"
+          />
+          <QuickActionCard
             title="Transactions"
             subtitle="View recent transactions"
             onClick={() => navigate("/transactions")}
