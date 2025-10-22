@@ -1,0 +1,176 @@
+# 📊 Budget Tracker – Personal Finance Analytics Dashboard
+
+A full-stack financial analytics platform built for the DotProduct assessment.
+The project enables users to record income/expenses, categorize transactions, and visualize financial insights interactively using D3.js.
+
+- Deployed URL:- https://budget-tracker-frontend-brown.vercel.app/
+- Browsable API Page:- https://budget-tracker-backend-1m7f.onrender.com/api-docs/
+- Demo account email:- usertest@gmail.com
+- Demo account password:- password654321
+
+---
+
+## 🚀 Tech Stack
+
+### Frontend
+- React.js (Vite) – UI framework
+- D3.js – Data-driven visualizations for category & monthly analytics
+- TailwindCSS – Styling and layout
+- DataGrid – Displaying api data
+- Axios – API communication
+- React Router DOM – Routing
+
+### Backend
+
+- Node.js + Express.js – RESTful API framework
+- MongoDB + Mongoose – Database & ORM
+- Joi – Schema validation
+
+---
+
+## 📂 Features
+
+- User authentication (login/register)
+- Add, edit, and delete transactions
+- Create and manage categories (income/expense)
+- Responsive UI and dynamic data loading
+- Modular folder structure (backend: MVC, frontend: component-based)
+
+### Analytics dashboard:
+- Total income vs expense by category
+- Monthly trend visualization using D3.js
+
+---
+
+## 🧠 Reasonable Assumptions Made
+
+- Each user can only access their own transactions and categories.
+- Data visualization focuses on aggregated monthly and category-wise summaries.
+- Transactions are created with a single user, category, and type (income | expense).
+- Authentication is simplified for demonstration (JWT/local storage used).
+
+---
+
+## 🌐 Hosted Links
+
+| Platform                                 | URL                                                                                                          |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Frontend (Vercel)**                    | [https://budget-tracker-frontend-brown.vercel.app/](https://budget-tracker-frontend-brown.vercel.app/)                  |
+| **Backend / DRF Browsable API (Render)** | [https://budget-tracker-backend-1m7f.onrender.com/api-docs/](https://budget-tracker-backend-1m7f.onrender.com/api-docs/)    |
+
+---
+
+## 🔐 Credentials for Review
+
+| Role     | Email                                                     | Password           |
+| -------- | --------------------------------------------------------- | ------------------ |
+| Reviewer | [usertest@gmail.com](mailto:usertest@gmail.com)           | **password654321** |
+
+---
+
+## ⚙️ Local Setup
+
+# Clone repository
+git clone https://github.com/SahO-ux/budget-tracker.git
+
+- From root folder(budget-tracker), run the following:-
+
+# Backend setup
+cd backend
+npm install
+npm run dev
+
+# Frontend setup
+cd frontend
+npm install
+npm run dev
+
+---
+
+## Environment Variables
+
+- Create .env in both backend & frontend with:
+
+# Backend
+PORT=8081
+MONGODB_URL=<your_mongodb_atlas_url>
+JWT_SECRET=<any_string>
+SWAGGER_SERVER_URL=http://localhost:8081
+
+# Frontend
+VITE_API_URL="http://localhost:8081"
+
+---
+## 📂 Folder Structure
+
+budget-tracker/
+│
+├── backend/
+│   ├── index.js
+│   ├── mongoDB/
+│   ├── server/
+│         ├── lib/
+│         ├── middleware/
+│         ├── modules/
+│         ├── modules-loader.js
+│         ├── swagger.js
+│   └── .env
+│   └── .gitignore
+│   └── package.json
+│   └── package-lock.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── public/
+│   │   ├── src/
+│   │        ├── api/
+│   │        ├── components/
+│   │        ├── modules/
+│   │        ├── Pages/
+│   │        ├── store/
+│   │        ├── utils
+│   │        └── App.jsx
+│   │        └── AuthContext.jsx
+│   │        └── index.css
+│   │        └── main.jsx
+│   ├── .env
+│   ├── .gitignore
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── vercel.json
+│   └── vite.config.js
+│   └── postcss.config.js
+│   └── tailwind.config.js
+└── README.md
+
+---
+
+## 🧩 Acknowledgements
+
+- The following open-source libraries were used and are gratefully acknowledged:
+
+- D3.js for data visualization
+- DataGrid for displaying data in table
+- TailwindCSS for styling
+- Framer motion for intuitive card interactions
+- React Bootstrap for implemnting modals across app
+- React.js for UI development
+- Express.js for backend API
+- MongoDB for database
+- Render & Vercel for free hosting
+
+---
+
+## 📧 Contact
+
+- Developer: Akbari Sahil
+- Email: sahilakbari1111@gmail.com
+- Phone: +91 7041849886
+- Submission For: DotProduct Full-Stack Developer Assessment
+- Sahil Akbari
+- 📧 sahilakbari1111@gmail.com
+- 📞 +91 7041849886
+
+---
+
