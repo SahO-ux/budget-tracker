@@ -137,7 +137,7 @@ export default function TransactionModal({
         onAddedOrEdited && onAddedOrEdited();
       }
       toast.success(
-        `Transaction ${transaction._id ? "edited" : "added"} successfully`
+        `Transaction ${transaction?._id ? "edited" : "added"} successfully`
       );
       onHide && onHide();
     } catch (err) {
