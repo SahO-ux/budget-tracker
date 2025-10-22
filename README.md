@@ -81,7 +81,7 @@ The project enables users to record income/expenses, categorize transactions, an
 git clone https://github.com/SahO-ux/budget-tracker.git
 ```
 
-## Environment Variables
+### Environment Variables
 
 - Create .env in both backend & frontend with:
 
@@ -93,7 +93,7 @@ JWT_SECRET=<any_string>
 SWAGGER_SERVER_URL=http://localhost:8081
 ```
 
-# Frontend
+### Frontend
 ```bash
 VITE_API_URL="http://localhost:8081"
 ```
