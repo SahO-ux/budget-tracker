@@ -31,14 +31,18 @@ The project enables users to record income/expenses, categorize transactions, an
 ## 📂 Features
 
 - User authentication (login/register)
+- For user registration, directly hit endpoint with POST request "/user/register" with body: name, email and password (all required)
 - Add, edit, and delete transactions
+- Transactions sorting by type, amount and date supported by using query params **sortBy** and **sortDir** along with pagination by infinite scrolling by using **skip** **limit** query params
+- Transactions filtering by **type**, **category**, **minAmount**, **maxAmount**, **startDate** and **endDate**
 - Create and manage categories (income/expense)
 - Responsive UI and dynamic data loading
 - Modular folder structure (backend: MVC, frontend: component-based)
 
-### Analytics dashboard:
+### Analytics dashboard (used D3.js):
+- Income vs Spent vs Balance
 - Total income vs expense by category
-- Monthly trend visualization using D3.js
+- Monthly trend visualization
 
 ---
 
@@ -56,7 +60,7 @@ The project enables users to record income/expenses, categorize transactions, an
 | Platform                                 | URL                                                                                                          |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | **Frontend (Vercel)**                    | [https://budget-tracker-frontend-brown.vercel.app/](https://budget-tracker-frontend-brown.vercel.app/)                  |
-| **Backend / DRF Browsable API (Render)** | [https://budget-tracker-backend-1m7f.onrender.com/api-docs/](https://budget-tracker-backend-1m7f.onrender.com/api-docs/)    |
+| **Backend / Swagger Browsable API (Render)** | [https://budget-tracker-backend-1m7f.onrender.com/api-docs/](https://budget-tracker-backend-1m7f.onrender.com/api-docs/)    |
 
 ---
 
@@ -64,45 +68,53 @@ The project enables users to record income/expenses, categorize transactions, an
 
 | Role     | Email                                                     | Password           |
 | -------- | --------------------------------------------------------- | ------------------ |
-| Reviewer | [test@example.com](mailto:test@example.com)           | **password** |
+| Reviewer | [test@example.com](mailto:test@example.com)               | **password** |
 
 ---
 
 ## ⚙️ Local Setup
 
 # Clone repository
+```bash
 git clone https://github.com/SahO-ux/budget-tracker.git
-
-- From root folder(budget-tracker), run the following:-
-
-# Backend setup
-cd backend
-npm install
-npm run dev
-
-# Frontend setup
-cd frontend
-npm install
-npm run dev
-
----
+```
 
 ## Environment Variables
 
 - Create .env in both backend & frontend with:
 
 # Backend
+```bash
 PORT=8081
 MONGODB_URL=<your_mongodb_atlas_url>
 JWT_SECRET=<any_string>
 SWAGGER_SERVER_URL=http://localhost:8081
+```
 
 # Frontend
+```bash
 VITE_API_URL="http://localhost:8081"
+```
+- From root folder(budget-tracker), run the following:-
+
+# Backend setup
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+# Frontend setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 ## 📂 Folder Structure
 
+```
 budget-tracker/
 │
 ├── backend/
@@ -143,17 +155,20 @@ budget-tracker/
 │   └── postcss.config.js
 │   └── tailwind.config.js
 └── README.md
+```
 
 ---
 
 ## 🧩 Acknowledgements
 
-- The following open-source libraries were used and are gratefully acknowledged:
+- The following open-source libraries and tools were used and are gratefully acknowledged:
 
 - D3.js for data visualization
 - DataGrid for displaying data in table
+- Axios for REST communication
 - TailwindCSS for styling
 - Framer motion for intuitive card interactions
+- Moment.js for displaying dates across app
 - React Bootstrap for implemnting modals across app
 - React.js for UI development
 - Express.js for backend API
@@ -164,13 +179,9 @@ budget-tracker/
 
 ## 📧 Contact
 
-- Developer: Akbari Sahil
+- Developer: Sahil Akbari
 - Email: sahilakbari1111@gmail.com
 - Phone: +91 7041849886
 - Submission For: DotProduct Full-Stack Developer Assessment
-- Sahil Akbari
-- 📧 sahilakbari1111@gmail.com
-- 📞 +91 7041849886
 
 ---
-
