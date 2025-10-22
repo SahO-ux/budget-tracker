@@ -5,8 +5,8 @@ The project enables users to record income/expenses, categorize transactions, an
 
 - Deployed URL:- https://budget-tracker-frontend-brown.vercel.app/
 - Browsable API Page:- https://budget-tracker-backend-1m7f.onrender.com/api-docs/
-- Demo account email:- usertest@gmail.com
-- Demo account password:- password654321
+- Demo account email:- test@example.com
+- Demo account password:- password
 
 ---
 
@@ -64,7 +64,7 @@ The project enables users to record income/expenses, categorize transactions, an
 
 | Role     | Email                                                     | Password           |
 | -------- | --------------------------------------------------------- | ------------------ |
-| Reviewer | [usertest@gmail.com](mailto:usertest@gmail.com)           | **password654321** |
+| Reviewer | [test@example.com](mailto:test@example.com)           | **password** |
 
 ---
 
