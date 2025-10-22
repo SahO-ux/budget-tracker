@@ -17,46 +17,48 @@ const Protected = ({ children }) => {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <Protected>
-                <Dashboard />
-              </Protected>
-            }
-          />
-          <Route
-            path="/analytics"
-            element={
-              <Protected>
-                <AnalyticsPage />
-              </Protected>
-            }
-          />
-          <Route
-            path="/transactions"
-            element={
-              <Protected>
-                <TransactionsPage />
-              </Protected>
-            }
-          />
+      <div className="min-h-screen bg-gray-50">
+        <main className="pt-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={
+                <Protected>
+                  <Dashboard />
+                </Protected>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <Protected>
+                  <AnalyticsPage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/transactions"
+              element={
+                <Protected>
+                  <TransactionsPage />
+                </Protected>
+              }
+            />
 
-          <Route
-            path="/categories"
-            element={
-              <Protected>
-                <CategoriesPage />
-              </Protected>
-            }
-          />
-        </Routes>
-      </main>
-    </div>
+            <Route
+              path="/categories"
+              element={
+                <Protected>
+                  <CategoriesPage />
+                </Protected>
+              }
+            />
+          </Routes>
+        </main>
+      </div>
+    </>
   );
 }
