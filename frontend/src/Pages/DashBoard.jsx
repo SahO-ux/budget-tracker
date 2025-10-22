@@ -11,26 +11,9 @@ import CreateBudgetModal from "../components/CreateBudgetModal";
 import { formatNumber } from "../utils/global-constants";
 
 /* Utility small skeleton */
-function Skeleton({ className = "h-6 bg-gray-100 rounded" }) {
+const Skeleton = ({ className = "h-6 bg-gray-100 rounded" }) => {
   return <div className={`${className} animate-pulse`} />;
-}
-
-/* Reusable stat/card */
-function StatCard({ title, value, accent, className = "", children }) {
-  return (
-    <div className={`card ${className} p-4 flex flex-col justify-between`}>
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="text-sm text-gray-500">{title}</div>
-          <div className={`text-2xl font-bold mt-1 ${accent || ""}`}>
-            {value}
-          </div>
-        </div>
-      </div>
-      {children}
-    </div>
-  );
-}
+};
 
 export default function Dashboard() {
   const chartRef = useRef(null);
