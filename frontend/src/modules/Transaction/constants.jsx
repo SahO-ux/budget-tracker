@@ -19,13 +19,14 @@ const validateTransaction = (transactionDetails = {}) => {
 };
 
 const validateMinMaxAmountParams = ({ maxAmount, minAmount }) => {
-  console.log({ maxAmount, minAmount });
   if (
+    minAmount !== "" &&
+    maxAmount !== "" &&
+    minAmount !== null &&
+    maxAmount !== null &&
     !isNaN(minAmount) &&
     !isNaN(maxAmount) &&
-    minAmount !== undefined &&
-    maxAmount !== undefined &&
-    maxAmount < minAmount
+    Number(maxAmount) < Number(minAmount)
   )
     return [
       false,

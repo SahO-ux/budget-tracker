@@ -16,6 +16,7 @@ import {
   initialFilterState,
   isAtBottom,
   transactionColumns,
+  validateMinMaxAmountParams,
 } from "./constants";
 
 import "react-data-grid/lib/styles.css";
@@ -115,6 +116,17 @@ export default function TransactionsPage() {
       setIsLoading(true);
       try {
         const params = buildParams(reset ? 0 : null);
+
+        // Validate min/max amount range
+        if ("minAmount" in params && "maxAmount" in params) {
+          const [isValid, error] = validateMinMaxAmountParams({
+            minAmount: params.minAmount,
+            maxAmount: params.maxAmount,
+          });
+
+          if (!isValid) return toast.error(error);
+        }
+
         // When reset we must request skip=0
         if (reset) params.skip = 0;
 
@@ -145,7 +157,6 @@ export default function TransactionsPage() {
 
   // Reset pagination when filters or sorting change
   useEffect(() => {
-    setRows([]);
     setSkip(0);
     _getTransactions({ reset: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -159,7 +159,9 @@ export default function TransactionFilters({ filters, setFilters }) {
 
         {/* Min amount */}
         <div className="flex-shrink-0 w-40">
-          <label className="block text-xs text-gray-600 mb-1">Min</label>
+          <label className="block text-xs text-gray-600 mb-1">
+            Min. Amount
+          </label>
           <input
             className="w-full p-2 border rounded text-sm"
             placeholder="e.g. 1000"
@@ -173,7 +175,9 @@ export default function TransactionFilters({ filters, setFilters }) {
 
         {/* Max amount */}
         <div className="flex-shrink-0 w-40">
-          <label className="block text-xs text-gray-600 mb-1">Max</label>
+          <label className="block text-xs text-gray-600 mb-1">
+            Max. Amount
+          </label>
           <input
             className="w-full p-2 border rounded text-sm"
             placeholder="e.g. 5000"
