@@ -51,4 +51,36 @@ const normalizeToObjectId = (maybeId) => {
   return new mongoose.mongo.ObjectId(str);
 };
 
-export { makeBodyOrQueryValidator, escapeRegExp, normalizeToObjectId };
+/**
+ * Validates that the maxAmount is not smaller than minAmount.
+ *
+ * @param {Object} params - The input parameters
+ * @param {number|string} params.minAmount - Minimum amount
+ * @param {number|string} params.maxAmount - Maximum amount
+ * @returns {[boolean, string|null]} Returns [isValid, errorMessage]
+ */
+const validateMinMaxAmountParams = ({ maxAmount, minAmount }) => {
+  if (
+    minAmount !== "" &&
+    maxAmount !== "" &&
+    minAmount !== null &&
+    maxAmount !== null &&
+    !isNaN(minAmount) &&
+    !isNaN(maxAmount) &&
+    Number(maxAmount) < Number(minAmount)
+  ) {
+    return [
+      false,
+      "Maximum amount should be greater than or equal to minimum amount.",
+    ];
+  }
+
+  return [true, null];
+};
+
+export {
+  makeBodyOrQueryValidator,
+  escapeRegExp,
+  normalizeToObjectId,
+  validateMinMaxAmountParams,
+};

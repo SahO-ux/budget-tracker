@@ -1,6 +1,7 @@
 import moment from "moment/moment.js";
 
 import { models } from "../../modules-loader.js";
+import { validateMinMaxAmountParams } from "../../lib/app-utility.js";
 
 const createTransaction = async ({
   userId,
@@ -35,6 +36,13 @@ const getTransactions = async ({
   sortDir,
 }) => {
   const TransactionModel = models.Transaction;
+
+  const [isValid, error] = validateMinMaxAmountParams({
+    minAmount,
+    maxAmount,
+  });
+
+  if (!isValid) throw new Error(error);
 
   // --- Build amount range filter ---
   const amountFilter = {};
