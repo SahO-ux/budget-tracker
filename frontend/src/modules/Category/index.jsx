@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import Select from "react-select";
 import _ from "lodash";
+import moment from "moment";
 
 import CategoryModal from "./CategoryModal";
 import CategoryDeleteModal from "./CategoryDeleteModal";
@@ -150,6 +151,38 @@ const CategoriesPage = () => {
     });
   };
 
+  const sortedRows = useMemo(() => {
+    if (!rows?.length) return [];
+    if (!sortColumns?.length || sortColumns?.[0]?.key === "actions")
+      return rows;
+
+    const column = sortColumns?.[0] || {};
+    const columnKey = column?.columnKey || "";
+    const direction = column?.direction;
+
+    // Guard clause to ignore delete column
+    if (columnKey === "actions" || !columnKey) return rows;
+
+    const sortedData = rows.toSorted((a, b) => {
+      if (columnKey === "name" || columnKey === "type") {
+        if (direction === "ASC")
+          return a[columnKey].localeCompare(b[columnKey]);
+        else return b[columnKey].localeCompare(a[columnKey]);
+      }
+      if (columnKey === "createdAt") {
+        const dateA = moment(a.createdAt);
+        const dateB = moment(b.createdAt);
+
+        if (direction === "ASC") return dateA - dateB;
+        else return dateB - dateA;
+      }
+
+      return 0;
+    });
+
+    return sortedData;
+  }, [rows, sortColumns]);
+
   return (
     <>
       <div className="p-6">
@@ -201,7 +234,7 @@ const CategoriesPage = () => {
           {isLoading && <LoaderBar />}
           <DataGrid
             columns={columns}
-            rows={rows}
+            rows={sortedRows}
             className="rdg-light"
             style={{ height: "calc(100vh - 200px)" }}
             rowHeight={42}
