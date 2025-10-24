@@ -76,16 +76,16 @@ The project enables users to record income/expenses, categorize transactions, an
 
 ## ⚙️ Local Setup
 
-# Clone repository
+### Clone repository
 ```bash
 git clone https://github.com/SahO-ux/budget-tracker.git
 ```
 
-## Environment Variables
+### Environment Variables
 
 - Create .env in both backend & frontend with:
 
-# Backend
+### Backend
 ```bash
 PORT=8081
 MONGODB_URL=<your_mongodb_atlas_url>
@@ -93,20 +93,20 @@ JWT_SECRET=<any_string>
 SWAGGER_SERVER_URL=http://localhost:8081
 ```
 
-# Frontend
+### Frontend
 ```bash
 VITE_API_URL="http://localhost:8081"
 ```
 - From root folder(budget-tracker), run the following:-
 
-# Backend setup
+### Backend setup
 ```bash
 cd backend
 npm install
 npm run dev
 ```
 
-# Frontend setup
+### Frontend setup
 ```bash
 cd frontend
 npm install
