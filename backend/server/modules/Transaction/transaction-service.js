@@ -1,7 +1,8 @@
-import moment from "moment/moment.js";
+import moment from "moment-timezone";
 
 import { models } from "../../modules-loader.js";
 import { validateMinMaxAmountParams } from "../../lib/app-utility.js";
+import { TIMEZONE } from "../../lib/global-constants.js";
 
 const createTransaction = async ({
   userId,
@@ -56,10 +57,10 @@ const getTransactions = async ({
   // --- Build date range filter ---
   const dateFilter = {};
   if (startDate) {
-    dateFilter.$gte = moment(startDate).startOf("day").toDate();
+    dateFilter.$gte = moment.tz(startDate, TIMEZONE).startOf("day").toDate();
   }
   if (endDate) {
-    dateFilter.$lte = moment(endDate).endOf("day").toDate();
+    dateFilter.$lte = moment.tz(endDate, TIMEZONE).endOf("day").toDate();
   }
 
   // --- Construct query ---

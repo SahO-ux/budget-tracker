@@ -3,4 +3,6 @@ const TransactionAndCategoryTypeEnums = {
   EXPENSE: "expense",
 };
 
-export { TransactionAndCategoryTypeEnums };
+const TIMEZONE = "Asia/Kolkata";
+
+export { TransactionAndCategoryTypeEnums, TIMEZONE };
