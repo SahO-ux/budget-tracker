@@ -38,6 +38,7 @@ The project enables users to record income/expenses, categorize transactions, an
 - Transactions sorting by type, amount and date supported by using query params **sortBy** and **sortDir** along with pagination by infinite scrolling by using **skip** **limit** query params
 - Transactions filtering by **type**, **category**, **minAmount**, **maxAmount**, **startDate** and **endDate**
 - Create and manage categories (income/expense)
+- Categories sorting (frontend only) by "Category Name", "type" and "Date"
 - Responsive UI and dynamic data loading
 - Modular folder structure (backend: MVC, frontend: component-based)
 
