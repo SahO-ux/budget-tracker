@@ -68,12 +68,12 @@ export default function CategoryModal({
         // Update existing category
         resultCategory = await updateCategory(category._id, payload);
         dispatch(updateCategoryAction(resultCategory)); // update in redux
-        onAdd && onAdd(resultCategory);
+        onEdit && onEdit(resultCategory);
       } else {
         // Create new category
         resultCategory = await createCategory(payload);
         dispatch(addCategoryAction(resultCategory));
-        onEdit && onEdit(resultCategory);
+        onAdd && onAdd(resultCategory);
       }
       toast.success(
         `Category ${category?._id ? "edited" : "added"} successfully`

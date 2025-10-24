@@ -136,9 +136,6 @@ const CategoriesPage = () => {
   const handleEditedCategory = (category = null) => {
     if (!category) return;
 
-    setName("");
-    setType("");
-
     setRows((prev) => {
       const idx = prev.findIndex((r) => r._id === category._id);
       if (idx !== -1) {
@@ -254,8 +251,8 @@ const CategoriesPage = () => {
         <CategoryModal
           show={showModal}
           onHide={() => setShowModal(false)}
-          onAdd={handleEditedCategory}
-          onEdit={handleAddedCategory}
+          onAdd={handleAddedCategory}
+          onEdit={handleEditedCategory}
           category={selectedCategory}
           typeOptions={typeOptions}
         />
