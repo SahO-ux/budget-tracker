@@ -19,7 +19,7 @@ const createTransactionSchema = Joi.object({
 });
 
 const updateTransactionSchema = Joi.object({
-  amount: Joi.number().optional(),
+  amount: Joi.number().min(1).optional(),
   type: Joi.string()
     .trim()
     .valid(...Object.values(TransactionAndCategoryTypeEnums))

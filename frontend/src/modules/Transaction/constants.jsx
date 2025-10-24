@@ -8,7 +8,7 @@ const validateTransaction = (transactionDetails = {}) => {
   if (
     !transactionDetails?.amount ||
     isNaN(transactionDetails?.amount) ||
-    Number(transactionDetails?.amount) < 0
+    Number(transactionDetails?.amount) <= 0
   )
     return [false, "Amount must be greater than 0"];
 
@@ -16,6 +16,23 @@ const validateTransaction = (transactionDetails = {}) => {
   if (!transactionDetails?.type) return [false, "Type is required"];
 
   return [true, null]; //everythings good
+};
+
+const validateMinMaxAmountParams = ({ maxAmount, minAmount }) => {
+  console.log({ maxAmount, minAmount });
+  if (
+    !isNaN(minAmount) &&
+    !isNaN(maxAmount) &&
+    minAmount !== undefined &&
+    maxAmount !== undefined &&
+    maxAmount < minAmount
+  )
+    return [
+      false,
+      "Maximum amount should be greater than or equal to minimum amount.",
+    ];
+
+  return [true, null]; // isValid:true, error:null
 };
 
 export const transactionColumns = ({ onDeleteClick, handleRowClick }) => [
@@ -134,4 +151,9 @@ const initialFilterState = {
   maxAmount: null,
 };
 
-export { validateTransaction, isAtBottom, initialFilterState };
+export {
+  validateTransaction,
+  validateMinMaxAmountParams,
+  isAtBottom,
+  initialFilterState,
+};
