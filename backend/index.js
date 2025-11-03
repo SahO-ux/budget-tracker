@@ -40,9 +40,11 @@ const startServer = async () => {
     await loadModules(app);
 
     // 3️⃣ Start server
-    const PORT = process.env.PORT || 3001;
-    app.listen(PORT, () =>
-      console.log(`🚀 SERVER LISTENING AT http://localhost:${PORT} 🚀`)
+    const PORT = process.env.PORT || 8081;
+    const HOST = "0.0.0.0";
+
+    app.listen(PORT, HOST, () =>
+      console.log(`🚀 SERVER LISTENING AT http://${HOST}:${PORT} 🚀`)
     );
   } catch (err) {
     console.error("❌ Failed to start server:", err.message);
