@@ -28,7 +28,7 @@ setupMiddleware(app);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // -------------------- Health Test Route --------------------
-app.get("/", (req, res) => res.json("Hello Budget Tracker"));
+app.get("/", (req, res) => res.json("Hello AWS from Budget Tracker"));
 
 // -------------------- Server Startup --------------------
 const startServer = async () => {
